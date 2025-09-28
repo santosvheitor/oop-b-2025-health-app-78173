@@ -17,7 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5026/") });
+builder.Services.AddScoped(sp => 
+    new HttpClient { BaseAddress = new Uri("http://localhost:5026/") });
 
 
 builder.Services.AddRazorPages();
