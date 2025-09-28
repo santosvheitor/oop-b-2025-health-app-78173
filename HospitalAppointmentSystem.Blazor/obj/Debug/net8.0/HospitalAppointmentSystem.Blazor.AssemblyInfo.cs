@@ -10,11 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-HospitalAppointmentSystem.Blazor-c7bfba8d-7e63-49d0-abb9-385a6e52401d")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("HospitalAppointmentSystem.Blazor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+780a58158d03c6e4b76f5434591d88f9505dd476")]
 [assembly: System.Reflection.AssemblyProductAttribute("HospitalAppointmentSystem.Blazor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HospitalAppointmentSystem.Blazor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
