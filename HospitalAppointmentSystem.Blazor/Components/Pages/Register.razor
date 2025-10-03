@@ -5,7 +5,7 @@
 
 <h3>Register</h3>
 
-<EditForm @key="registerModel" Model="@registerModel" OnValidSubmit="RegisterUser" FormName="RegisterForm">
+<EditForm Model="@registerModel" OnValidSubmit="RegisterUser" FormName="RegisterForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -27,32 +27,41 @@
     <button type="submit">Register</button>
 </EditForm>
 
-<p style="color:red">@Message</p>
-
+@if (!string.IsNullOrEmpty(Message))
+{
+    <p style="color:@(IsError ? "red" : "green")">@Message</p>
+}
 
 @code {
-    private RegisterModel registerModel = new RegisterModel
-    {
-        FullName = string.Empty,
-        Email = string.Empty,
-        Password = string.Empty
-    };
+    private RegisterModel registerModel = new RegisterModel();
     private string Message = "";
+    private bool IsError = false;
 
     private async Task RegisterUser()
     {
-        Console.WriteLine("➡️ Entrou em RegisterUser"); // debug
-        var response = await Http.PostAsJsonAsync("api/account/register", registerModel);
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/account/register", registerModel);
 
-        if (response.IsSuccessStatusCode)
-        {
-            Message = "Registrado com sucesso!";
-            NavigationManager.NavigateTo("/login");
+            if (response.IsSuccessStatusCode)
+            {
+                IsError = false;
+                Message = "Registered successfully! Redirecting to login...";
+                // Espera 1 segundo e redireciona
+                await Task.Delay(1000);
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                IsError = true;
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Message = $"Erro: {errorContent}";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            var error = await response.Content.ReadAsStringAsync();
-            Message = "Erro: " + error;
+            IsError = true;
+            Message = $"Erro inesperado: {ex.Message}";
         }
     }
 
